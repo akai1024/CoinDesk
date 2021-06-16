@@ -37,4 +37,14 @@ public class CoinId implements Serializable {
         return Objects.hash(chartName, code);
     }
 
+    public static CoinId extractId(Coin coin) {
+        if (coin == null) {
+            return null;
+        }
+        CoinId id = new CoinId();
+        id.setChartName(coin.getChartName());
+        id.setCode(coin.getCode());
+        return id;
+    }
+
 }

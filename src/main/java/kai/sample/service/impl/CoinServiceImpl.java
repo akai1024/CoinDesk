@@ -2,6 +2,7 @@ package kai.sample.service.impl;
 
 import kai.sample.controller.dto.request.GetCoinListRequest;
 import kai.sample.datasource.entity.Coin;
+import kai.sample.datasource.entity.CoinId;
 import kai.sample.datasource.repo.CoinRepository;
 import kai.sample.service.CoinService;
 import kai.sample.service.dto.CoinDeskAPIReponse;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CoinServiceImpl implements CoinService {
@@ -78,6 +76,40 @@ public class CoinServiceImpl implements CoinService {
             coin.setUpdateTime(updateTime);
             coinRepository.save(coin);
         }
+    }
+
+    @Override
+    public Coin add(Coin coin) {
+        CoinId id = CoinId.extractId(coin);
+        if (coinRepository.existsById(id)) {
+            logger.error("新增失敗，幣種已存在");
+            return null;
+        }
+
+        coin.setUpdateTime(new Date());
+        return coinRepository.saveAndFlush(coin);
+    }
+
+    @Override
+    public boolean delete(CoinId coinId) {
+        if (coinRepository.existsById(coinId)) {
+            coinRepository.deleteById(coinId);
+            return true;
+        }
+        logger.error("刪除失敗，幣種不存在");
+        return false;
+    }
+
+    @Override
+    public Coin modify(Coin coin) {
+        CoinId id = CoinId.extractId(coin);
+        if (!coinRepository.existsById(id)) {
+            logger.error("修改失敗，幣種不存在");
+            return null;
+        }
+
+        coin.setUpdateTime(new Date());
+        return coinRepository.saveAndFlush(coin);
     }
 
 }
