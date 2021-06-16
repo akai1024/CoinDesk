@@ -6,7 +6,7 @@ create database coin_desk collate 'utf8mb4_general_ci';
 ### 建表語法
 ```text
 use coin_desk;
-CREATE TABLE `coin2` (
+CREATE TABLE `coin` (
   `chart_name` varchar(32) NOT NULL COMMENT '圖表名稱',
   `code` varchar(32) NOT NULL COMMENT '代碼',
   `symbol` varchar(32) NOT NULL COMMENT '標示',
