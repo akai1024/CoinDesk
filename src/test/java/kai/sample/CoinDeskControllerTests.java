@@ -23,6 +23,9 @@ public class CoinDeskControllerTests {
     @Autowired
     private CoinDeskController coinDeskController;
 
+    /**
+     * 5. 測試呼叫coindeskAPI成功，並顯示其內容。
+     */
     @Test
     public void callCoinDesk() throws Exception {
         BasicDataReponse<CoinDeskAPIReponse> response = coinDeskController.call();
@@ -30,6 +33,9 @@ public class CoinDeskControllerTests {
         logger.info("callCoinDesk test pass, data: {}", response.getData());
     }
 
+    /**
+     * 6. 測試呼叫資料轉換的API，並顯示其內容。
+     */
     @Test
     public void callCoinDeskAndRefresh() throws Exception {
         BasicDataReponse<CoinDeskAPIReponse> response = coinDeskController.callAndRefresh();
