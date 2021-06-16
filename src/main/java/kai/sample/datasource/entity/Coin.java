@@ -1,5 +1,8 @@
 package kai.sample.datasource.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import kai.sample.common.CustomJsonUtil;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -78,6 +81,28 @@ public class Coin implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @JsonIgnore
+    @Override
+    public int hashCode() {
+        return CoinId.extractId(this).hashCode();
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Coin) {
+            Coin coin = (Coin) obj;
+            return CoinId.extractId(this).equals(CoinId.extractId(coin));
+        }
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return CustomJsonUtil.toJson(this);
     }
 }
 

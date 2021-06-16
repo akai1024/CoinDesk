@@ -1,5 +1,7 @@
 package kai.sample.datasource.entity;
 
+import kai.sample.common.CustomJsonUtil;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -35,6 +37,11 @@ public class CoinId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(chartName, code);
+    }
+
+    @Override
+    public String toString() {
+        return CustomJsonUtil.toJson(this);
     }
 
     public static CoinId extractId(Coin coin) {
